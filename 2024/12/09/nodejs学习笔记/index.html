@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="NodeJS项目结构1234npm init [-y]               &#x2F;&#x2F; 生成package.jsonnpm install [--save] module  &#x2F;&#x2F;save表示写入到package.json的dependencies中&#x2F;&#x2F;npm 5.0版本以后不需要再加 --save，它会自动写入package.jsonnpm uninstall module  package-l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs学习笔记">
+<meta property="og:url" content="http://example.com/2024/12/09/nodejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="那年青春">
+<meta property="og:description" content="NodeJS项目结构1234npm init [-y]               &#x2F;&#x2F; 生成package.jsonnpm install [--save] module  &#x2F;&#x2F;save表示写入到package.json的dependencies中&#x2F;&#x2F;npm 5.0版本以后不需要再加 --save，它会自动写入package.jsonnpm uninstall module  package-l">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-09T07:04:49.592Z">
+<meta property="article:modified_time" content="2024-12-10T12:39:18.688Z">
+<meta property="article:author" content="Timis Li">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/12/09/nodejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/12/09/nodejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2024/12/09/nodejs学习笔记/","title":"nodejs学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>nodejs学习笔记 | 那年青春</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">那年青春</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NodeJS"><span class="nav-number">1.</span> <span class="nav-text">NodeJS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.1.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.0.2.</span> <span class="nav-text">MongoDB数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8express%E6%A1%86%E6%9E%B6"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用express框架</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E7%A6%BB%E4%B8%8E%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">路由分离与设计</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#art-template"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">art-template</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%90%8C%E6%AD%A5%E6%8F%90%E4%BA%A4%E5%92%8C%E5%BC%82%E6%AD%A5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.0.3.1.1.</span> <span class="nav-text">表单同步提交和异步提交</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#express%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%BA%AB%E4%B8%8D%E6%94%AF%E6%8C%81session%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9session%E6%A8%A1%E5%9D%97"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">express框架本身不支持session，需要使用第三方session模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.3.2.1.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Express中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%98%AF%E6%8C%89%E7%85%A7%E4%BB%A3%E7%A0%81%E9%A1%BA%E5%BA%8F%E4%BE%9D%E6%AC%A1%E6%89%A7%E8%A1%8C%E7%9A%84"><span class="nav-number">1.0.3.3.1.</span> <span class="nav-text">中间件是按照代码顺序依次执行的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E7%BB%8F%E8%BF%87%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%97%B6%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%AD%E6%B2%A1%E6%9C%89%E8%B0%83%E7%94%A8next-%EF%BC%8C%E5%88%99%E8%AF%B7%E6%B1%82%E4%BC%9A%E5%81%9C%E7%95%99%E5%9C%A8%E8%BF%99%E4%B8%AA%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%AD%EF%BC%9B%E5%A6%82%E6%9E%9C%E6%9C%89%E8%B0%83%E7%94%A8next-%EF%BC%8C%E5%88%99%E8%AF%B7%E6%B1%82%E4%BC%9A%E7%BB%A7%E7%BB%AD%E5%8E%BB%E5%8C%B9%E9%85%8D%E4%B8%8B%E4%B8%AA%E4%B8%AD%E9%97%B4%E4%BB%B6%EF%BC%8C%E4%BD%86%E6%98%AF%E5%AE%83%E5%8F%AA%E4%BC%9A%E5%8E%BB%E5%8C%B9%E9%85%8D%E7%AC%A6%E5%90%88%E8%A7%84%E5%AE%9A%E6%9D%A1%E4%BB%B6%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">1.0.3.3.2.</span> <span class="nav-text">请求经过中间件时，如果中间件中没有调用next()，则请求会停留在这个中间件中；如果有调用next()，则请求会继续去匹配下个中间件，但是它只会去匹配符合规定条件的中间件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%AE%9E%E9%99%85%E4%B8%8A%E6%8E%A5%E5%8F%973%E4%B8%AA%E5%8F%82%E6%95%B0function%EF%BC%88req-res-next%EF%BC%89%EF%BC%8Cnext%E6%98%AF%E4%B8%AA%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.3.3.3.</span> <span class="nav-text">中间件实际上接受3个参数function（req,res,next），next是个函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">前后端分离</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Timis Li"
+      src="/img/1.jpg">
+  <p class="site-author-name" itemprop="name">Timis Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/09/nodejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/1.jpg">
+      <meta itemprop="name" content="Timis Li">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="那年青春">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="nodejs学习笔记 | 那年青春">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nodejs学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-09 15:04:49" itemprop="dateCreated datePublished" datetime="2024-12-09T15:04:49+08:00">2024-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-10 20:39:18" itemprop="dateModified" datetime="2024-12-10T20:39:18+08:00">2024-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="NodeJS"><a href="#NodeJS" class="headerlink" title="NodeJS"></a>NodeJS</h1><h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm init [-y]               <span class="comment">// 生成package.json</span></span><br><span class="line">npm install [--save] <span class="variable language_">module</span>  <span class="comment">//save表示写入到package.json的dependencies中</span></span><br><span class="line"><span class="comment">//npm 5.0版本以后不需要再加 --save，它会自动写入package.json</span></span><br><span class="line">npm uninstall <span class="variable language_">module</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>package-lock.json作用：<span id="more"></span></p>
+<p>1.加快模块下载速度<br>2.锁定模块版本，防止重新安装模块的时候自动更新成最新版</p>
+</li>
+<li><p>设置响应头</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># writeHead会把服务器自动创建的set-cookie给替换掉</span><br><span class="line"># setHeader不会，它会增加一个set-cookie，设置了几个就增加几个</span><br><span class="line">res.<span class="title function_">writeHead</span>(<span class="number">200</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;Content-Type&quot;</span>:<span class="string">&quot;text/plain&quot;</span>,</span><br><span class="line">        <span class="string">&quot;set-cookie&quot;</span>:<span class="string">&quot;user=lienrong&quot;</span></span><br><span class="line">    &#125;).<span class="title function_">end</span>()</span><br><span class="line"></span><br><span class="line">res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;application/json&quot;</span>).<span class="title function_">end</span>()</span><br><span class="line"><span class="comment">//cookie添加多个值</span></span><br><span class="line">res.<span class="title function_">setHeader</span>(<span class="string">&quot;set-cookie&quot;</span>,[<span class="string">&quot;info_1&quot;</span>=<span class="string">&quot;userinfo&quot;</span>,<span class="string">&quot;info_2&quot;</span>=<span class="string">&quot;cartinfo&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>return的使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span>   <span class="comment">//终止当前函数的运行，并把return的值赋值给函数。使用return可以有效减少else的使用</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>常用第三方模块</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">express</span><br><span class="line">art-template</span><br><span class="line">express-art-template   <span class="comment">//express框架下的渲染引擎</span></span><br><span class="line">express-session</span><br><span class="line">body-parser	<span class="comment">//解析post请求体</span></span><br><span class="line">nodemon   <span class="comment">//调试时自动重启服务</span></span><br><span class="line">mongoose  <span class="comment">//操作MongoDB</span></span><br><span class="line">mysql</span><br><span class="line">md5	</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>导出文件的方法、属性供外部访问</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//module存储形式</span></span><br><span class="line"><span class="variable language_">module</span> = &#123;</span><br><span class="line">    <span class="attr">exports</span>: &#123; <span class="attr">x</span>:<span class="string">&quot;x&quot;</span>,<span class="attr">xx</span>:<span class="string">&quot;xx&quot;</span>,<span class="attr">xxx</span>:<span class="string">&quot;xxx&quot;</span>&#125;,</span><br><span class="line">    <span class="attr">aaa</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">bbb</span>:<span class="string">&quot;&quot;</span>   </span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//文件默认代码</span></span><br><span class="line"><span class="built_in">exports</span> = <span class="variable language_">module</span>.<span class="property">exports</span>	</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">xx</span> = xx			<span class="comment">//导出单个</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;&#125;		<span class="comment">//导出多个</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = xxx	<span class="comment">//只导出一个</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="MongoDB数据库"><a href="#MongoDB数据库" class="headerlink" title="MongoDB数据库"></a>MongoDB数据库</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数据存储格式</span></span><br><span class="line"><span class="comment">//集合 -文档</span></span><br><span class="line"><span class="comment">//集合是数组，文档是一个一个的对象</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">students</span>:[</span><br><span class="line">        &#123;&#125;,</span><br><span class="line">        &#123;&#125;,</span><br><span class="line">        &#123;&#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">teachers</span>:[</span><br><span class="line">        &#123;&#125;,</span><br><span class="line">        &#123;&#125;</span><br><span class="line">    ],</span><br><span class="line">   ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 该文件专门用来连接MongoDB，并创建不同的集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> schema = mongoose.<span class="property">Schema</span></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.<span class="title function_">connect</span>(<span class="string">&quot;mongodb://localhost:27017/eduSystem&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//设定集合结构和每个属性的约束条件</span></span><br><span class="line"><span class="comment">//&#123; 约束1，约束2...&#125;是一种设计约束的格式</span></span><br><span class="line"><span class="keyword">var</span> studentsSchema = <span class="keyword">new</span> <span class="title function_">schema</span>(&#123;</span><br><span class="line">    <span class="attr">id</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">name</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">sex</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">age</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">country</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">var</span> teacherSchema = <span class="keyword">new</span> <span class="title function_">schema</span>(&#123;</span><br><span class="line"></span><br><span class="line">    <span class="attr">id</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">email</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">password</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">        <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">create_time</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">Date</span>,</span><br><span class="line">        <span class="attr">default</span>:<span class="title class_">Date</span>.<span class="property">now</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建teachers集合（类似数据表）</span></span><br><span class="line"><span class="keyword">var</span> teachers = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Teacher&quot;</span>,teacherSchema)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建students集合</span></span><br><span class="line"><span class="keyword">var</span> students = mongoose.<span class="title function_">model</span>(<span class="string">&quot;Student&quot;</span>,studentsSchema)</span><br><span class="line"></span><br><span class="line"><span class="comment">//必须写在最后，否则router中无法识别findOne之类的方法</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="string">&quot;students&quot;</span>:students,</span><br><span class="line">    <span class="string">&quot;teachers&quot;</span>:teachers</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加数据，每条数据是个对象</span></span><br><span class="line"><span class="comment">// 只能一个一个添加，不能一次性添加多个，会报错？</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="title class_">Kitten</span>(</span><br><span class="line">    &#123;<span class="attr">username</span>:<span class="string">&quot;中国人&quot;</span>,<span class="attr">password</span>:<span class="number">1234</span>&#125;</span><br><span class="line">)</span><br><span class="line">a.<span class="title function_">save</span>(<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sucess&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//查询全部数据,返回数组</span></span><br><span class="line"><span class="title class_">Kitten</span>.<span class="title function_">find</span>(<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//按条件查询，返回数组</span></span><br><span class="line"><span class="title class_">Kitten</span>.<span class="title function_">find</span>(&#123;<span class="attr">password</span>:<span class="number">1234</span>&#125;,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回的是对象</span></span><br><span class="line"><span class="title class_">Kitten</span>.<span class="title function_">findOne</span>(&#123;<span class="attr">password</span>:<span class="number">1234</span>&#125;,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//按条件删除数据</span></span><br><span class="line"><span class="title class_">Kitten</span>.<span class="title function_">deleteOne</span>(&#123;<span class="attr">password</span>:<span class="number">1234</span>&#125;,<span class="keyword">function</span> (<span class="params">err</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sucess&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//更新一条数据，第一个参数是查询条件，第二个参数是要修改数据中的哪个值</span></span><br><span class="line"><span class="title class_">Kitten</span>.<span class="title function_">findOneAndUpdate</span>(&#123;<span class="attr">password</span>:<span class="number">23</span>&#125;,&#123;<span class="attr">password</span>:<span class="number">1234</span>&#125;,<span class="keyword">function</span> (<span class="params">err</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sucess&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用express框架"><a href="#使用express框架" class="headerlink" title="使用express框架"></a>使用express框架</h3><ul>
+<li>启动服务器</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>()</span><br><span class="line">app.<span class="title function_">listen</span>(port,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h5 id="路由分离与设计"><a href="#路由分离与设计" class="headerlink" title="路由分离与设计"></a>路由分离与设计</h5>app.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> router = <span class="built_in">require</span>(<span class="string">&quot;./router.js&quot;</span>)</span><br><span class="line">app.<span class="title function_">use</span>(router) <span class="comment">//挂载路由</span></span><br></pre></td></tr></table></figure>
+<p>​      router.js   —作用只有一个，对不同url做不同处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> router = express.<span class="title class_">Router</span>()  <span class="comment">//创建路由</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>=router <span class="comment">//导出路由</span></span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>,<span class="keyword">function</span> (<span class="params">req,res,next</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&quot;/&quot;</span>,<span class="keyword">function</span> (<span class="params">req,res,next</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>​	路由设计</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>请求类型</th>
+<th>get参数</th>
+<th>post参数</th>
+<th>是否需要登录</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;login</td>
+<td>get</td>
+<td></td>
+<td></td>
+<td></td>
+<td>获取登录页面</td>
+</tr>
+<tr>
+<td>&#x2F;login</td>
+<td>post</td>
+<td></td>
+<td>email、password</td>
+<td></td>
+<td>提交”登录“表单</td>
+</tr>
+<tr>
+<td>&#x2F;create</td>
+<td>get</td>
+<td></td>
+<td></td>
+<td>是</td>
+<td>获取添加学生页面</td>
+</tr>
+<tr>
+<td>&#x2F;create</td>
+<td>post</td>
+<td></td>
+<td>name、sex、age、country</td>
+<td>是</td>
+<td>提交”添加学生“表单</td>
+</tr>
+</tbody></table>
+<ul>
+<li>获取post请求的body</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用body-parser中间件</span></span><br><span class="line"><span class="keyword">var</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;))	<span class="comment">//解析application/x-www-form-urlencoded。req.body含有													  [Object: null prototype]</span></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))	<span class="comment">//req.body是标准对象</span></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">json</span>())  <span class="comment">//解析application/json</span></span><br><span class="line">req.<span class="property">body</span>    <span class="comment">//req.body是一个对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不使用中间件</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>())</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123;<span class="attr">extended</span>:<span class="literal">true</span>&#125;))</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>对外开放静态资源访问</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/public&quot;</span>,express.<span class="title function_">static</span>(<span class="string">&quot;public&quot;</span>)) <span class="comment">//访问url是 /public/xxx</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/aaa&quot;</span>,express.<span class="title function_">static</span>(<span class="string">&quot;public&quot;</span>)) <span class="comment">//访问url是 /aaa/xxx</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(<span class="string">&quot;public&quot;</span>)) <span class="comment">//访问url是 /xxx</span></span><br></pre></td></tr></table></figure>
+<h4 id="art-template"><a href="#art-template" class="headerlink" title="art-template"></a>art-template</h4><ul>
+<li>express 中使用art-template</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install --save art-template</span><br><span class="line">npm install --save express-art-template</span><br><span class="line">app.<span class="title function_">engine</span>(<span class="string">&quot;html&quot;</span>,<span class="built_in">require</span>(<span class="string">&quot;express-art-template&quot;</span>))</span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&quot;views&quot;</span>,<span class="string">&quot;/xxx&quot;</span>)		<span class="comment">//修改默认寻找html的目录views</span></span><br><span class="line">res.<span class="title function_">render</span>(<span class="string">&quot;index.html&quot;</span>,&#123;</span><br><span class="line">    <span class="attr">xxx</span>:<span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">    <span class="attr">xxx</span>:<span class="string">&quot;xxx&quot;</span></span><br><span class="line">&#125;)	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>art-template页面继承与引用</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; extend &quot;./xxx.html&quot;&#125;&#125;   </span><br><span class="line">&#123;&#123; block &quot;自定义的名字&quot;&#125;&#125;</span><br><span class="line">	这里写自定义页面</span><br><span class="line">&#123;&#123; /block &#125;&#125;</span><br><span class="line">&#123;&#123; include ./xxx.html &#125;&#125; </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>模板语法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//渲染</span></span><br><span class="line">res.<span class="title function_">render</span>(<span class="string">&quot;index.html&quot;</span>,&#123;</span><br><span class="line">                <span class="attr">user</span>:req.<span class="property">session</span>.<span class="property">userinfo</span>,</span><br><span class="line">                <span class="attr">students</span>:data</span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//html中如果没有模板语法存在，可以直接返回html</span></span><br><span class="line"><span class="comment">//html中如果有模板语法，省略第二个参数，可以直接忽略语法</span></span><br><span class="line">res.<span class="title function_">render</span>(<span class="string">&quot;index.html&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">students是数组[</span></span><br><span class="line"><span class="comment">				&#123;&#125;,</span></span><br><span class="line"><span class="comment">				&#123;&#125;,</span></span><br><span class="line"><span class="comment">				&#123;&#125;</span></span><br><span class="line"><span class="comment">		  	 ]</span></span><br><span class="line"><span class="comment">循环读取students，有几个对象就创建几个&lt;tr&gt;标签</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">&#123;&#123; each students &#125;&#125;</span><br><span class="line">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.id &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.name &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.sex &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.age &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; $value.country &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">button</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span> = <span class="string">&quot;/update?id=&#123;&#123; $value.id &#125;&#125;&quot;</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">button</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span> = <span class="string">&quot;/del?id=&#123;&#123; $value.id &#125;&#125;&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">              </span><br><span class="line">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">&#123;&#123; /each &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">如果user存在，那么展示第一个&lt;ul&gt;</span></span><br><span class="line"><span class="comment">否则，展示第二个&lt;ul&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">&#123;&#123; if user &#125;&#125;</span><br><span class="line">           <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav navbar-nav navbar-right&quot;</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>欢迎您：<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>&#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/logout&quot;</span>&gt;</span>退出登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        &#123;&#123; else &#125;&#125;</span><br><span class="line">           <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav navbar-nav navbar-right&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/login&quot;</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/register&quot;</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"> &#123;&#123; /if &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>回调</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//readFile中的function是一个回调函数，若想使用该函数里面的变量，</span></span><br><span class="line"><span class="comment">//就要在该函数执行完成以后，把变量作为参数传递给外部的callback函数，</span></span><br><span class="line"><span class="comment">//这时callback函数中参数就是需要的变量</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">list</span>(<span class="params">callback</span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&quot;./db.json&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">        students=<span class="title class_">JSON</span>.<span class="title function_">parse</span>(data).<span class="property">students</span></span><br><span class="line">        <span class="title function_">callback</span>(students)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用list函数</span></span><br><span class="line"><span class="title function_">list</span>(<span class="keyword">function</span> (<span class="params">x</span>)&#123;</span><br><span class="line">    <span class="comment">//x就是students</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> x)&#123;</span><br><span class="line">    consolo.<span class="title function_">log</span>(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//x是数组时，i的值在执行的时候是索引下标</span></span><br><span class="line"><span class="comment">//x是对象时，i的值在执行的时候是属性</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Promise对象</li>
+</ul>
+<ol>
+<li><p>支持then链式语法，解决回调地狱</p>
+</li>
+<li><p>规定异步执行顺序</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&quot;./router.js&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> x = <span class="string">&quot;hello world&quot;</span></span><br><span class="line">        <span class="title function_">resolve</span>(x) <span class="comment">//x作为参数传递给resolve函数 </span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p1</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">data</span>)&#123;  <span class="comment">//这就是p1的resolve函数，data就是x</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">123</span>  <span class="comment">//把x传递给下个then的函数的参数</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">a</span>)&#123; <span class="comment">//a就是123</span></span><br><span class="line">        fs.<span class="title function_">readFile</span>(<span class="string">&quot;./app.js&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(a+<span class="string">&quot;   hahaha&quot;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&quot;./router.js&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> x = <span class="string">&quot;hello world&quot;</span></span><br><span class="line">        <span class="title function_">resolve</span>(x) <span class="comment">//x作为参数传递给resolve函数</span></span><br><span class="line">        </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p1</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">data</span>)&#123;  <span class="comment">//这就是p1的resolve函数，data就是x</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">            fs.<span class="title function_">readFile</span>(<span class="string">&quot;./router.js&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">                <span class="keyword">var</span> y = <span class="string">&quot;hello world&quot;</span>+<span class="number">123</span></span><br><span class="line">                <span class="title function_">resolve</span>(y) <span class="comment">//y作为参数传递给resolve函数         </span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;) </span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">a</span>)&#123; <span class="comment">//a就是y</span></span><br><span class="line">        fs.<span class="title function_">readFile</span>(<span class="string">&quot;./app.js&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)&#123;</span><br><span class="line">    </span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(a+<span class="string">&quot;   hahaha&quot;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">#	<span class="keyword">throw</span> err不能放在then方法的异步函数中，要放在异步函数外面，否则<span class="keyword">catch</span>捕获不到err</span><br><span class="line">#	then的异步函数结果想要传递给下个then，结果必须放在异步函数外面，因此必须使用promise，通过resolve传递</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">        connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers where email=?&quot;</span>,body.<span class="property">email</span>,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (err)&#123;</span><br><span class="line">                <span class="title function_">reject</span>(err)		<span class="comment">//设为异常</span></span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="title function_">resolve</span>(result.<span class="property">length</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">length</span>)&#123;	</span><br><span class="line">        <span class="keyword">if</span> (length !== <span class="number">0</span>)&#123;		<span class="comment">//判断user表中有无对应用户</span></span><br><span class="line">            res.<span class="title function_">json</span>(&#123;</span><br><span class="line">                <span class="attr">code</span>:<span class="number">4</span>,</span><br><span class="line">                <span class="attr">message</span>:<span class="string">&quot;用户已存在&quot;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;&#125;)   <span class="comment">//不执行后面的then</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;		</span><br><span class="line">            connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers order by id desc limit 1&quot;</span>,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (err)&#123;</span><br><span class="line">                    <span class="title function_">reject</span>(err)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (result.<span class="property">length</span> == <span class="number">0</span>)&#123; 	<span class="comment">//判断user表是否为空，为空新用户id设为1000，不为空新用户id是最后一个用												户的id增加1</span></span><br><span class="line">                    newid = <span class="number">1000</span></span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    newid = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(result))[<span class="number">0</span>].<span class="property">id</span> + <span class="number">1</span></span><br><span class="line">                &#125; </span><br><span class="line">                <span class="title function_">resolve</span>(newid)        <span class="comment">//传递新用户的id给下个then</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)    </span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">newid</span>)&#123;</span><br><span class="line">            connection.<span class="title function_">query</span>(<span class="string">&quot;insert into teachers values(?,?,?)&quot;</span>,[newid,body.<span class="property">email</span>,body.<span class="property">password</span>],</span><br><span class="line">            <span class="keyword">function</span> (<span class="params">err,result</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (err)&#123;</span><br><span class="line">                   	<span class="title function_">next</span>(err)</span><br><span class="line">                    <span class="keyword">return</span> </span><br><span class="line">                &#125;</span><br><span class="line">                req.<span class="property">session</span>.<span class="property">userinfo</span> = &#123;<span class="attr">email</span>:body.<span class="property">email</span>&#125;</span><br><span class="line">                res.<span class="title function_">json</span>(&#123;</span><br><span class="line">                    <span class="attr">code</span>:-<span class="number">1</span>,</span><br><span class="line">                    <span class="attr">message</span>:<span class="string">&quot;ok&quot;</span></span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;)    </span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>)&#123;		<span class="comment">//捕获异常</span></span><br><span class="line">       <span class="title function_">next</span>(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>​	async await优化promise</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">await</span>会等待promise结果变为resolve，再执行后面的代码</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">myfun</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">        <span class="comment">//异步函数</span></span><br><span class="line">        <span class="title function_">resolve</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//其他代码</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//把promise返回值赋值给x</span></span><br><span class="line">    <span class="keyword">var</span> x = <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>)&#123;</span><br><span class="line">        <span class="comment">//异步函数</span></span><br><span class="line">        <span class="title function_">resolve</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//执行函数，并捕获异常</span></span><br><span class="line"><span class="title function_">myfun</span>().<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+<li><p>动态获取绝对路径</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line">path.<span class="title function_">join</span>(<span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>......) <span class="comment">//拼接成路径，拼接过程中自动加入\或删除多余的\</span></span><br><span class="line"></span><br><span class="line">path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;..&#x27;</span>) <span class="comment">//返回当前目录的上一级目录</span></span><br><span class="line">#path还有其他<span class="variable constant_">API</span>，请查看文档</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意以下两个属性前面有两条下划线</span></span><br><span class="line">__dirname  <span class="comment">//动态获取当前文件所在的目录的绝对路径</span></span><br><span class="line">__filename <span class="comment">//动态获取当前文件的绝对路径</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&quot;./db.json&quot;</span>,<span class="string">&quot;utf8&quot;</span>,<span class="keyword">function</span> (<span class="params">err,data</span>)</span><br><span class="line">#当执行node所处的目录不是xxx.<span class="property">js</span>所处的目录时，使用相对路径会报错</span><br><span class="line">#所有的针对文件的读写等操作（包括对外开放静态资源）都不要使用相对路径，而要使用__dirname和__filename来动态获取绝对路径</span><br><span class="line">#但是<span class="built_in">require</span>引用的文件要用相对路径，它不受执行node所处目录影响</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>art-template页面继承与引用</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; extend &quot;./xxx.html&quot;&#125;&#125;   </span><br><span class="line">&#123;&#123; block &quot;自定义的名字&quot;&#125;&#125;</span><br><span class="line">	这里写自定义页面</span><br><span class="line">&#123;&#123; /block &#125;&#125;</span><br><span class="line">&#123;&#123; include ./xxx.html &#125;&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><h5 id="表单同步提交和异步提交"><a href="#表单同步提交和异步提交" class="headerlink" title="表单同步提交和异步提交"></a>表单同步提交和异步提交</h5></li>
+<li><p>同步提交</p>
+<ul>
+<li>页面结果由服务器处理</li>
+<li>页面会刷新</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;url&quot;</span> <span class="attr">method</span>=<span class="string">&quot;get/post&quot;</span>&gt;</span></span><br><span class="line">    .....</span><br><span class="line">    .....</span><br><span class="line">    .....</span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>异步提交</p>
+<ul>
+<li>服务器只返回数据，客户端通过ajax，接受数据，根据不同数据对页面做不同处理</li>
+<li>服务器对页面的处理不会生效</li>
+<li>页面不会刷新</li>
+<li>页面想要跳转请使用window.location.href&#x3D;”xxx”</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 1.html引入jquery库</span></span><br><span class="line"><span class="comment"> 2.引用外部js文件</span></span><br><span class="line"><span class="comment"> 3.去掉form标签的action和method属性</span></span><br><span class="line"><span class="comment"> 4.button的type属性改为button</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//第一种方式，不定义函数，直接调用js，监听指定元素的点击事件，发送ajax请求</span></span><br><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">  $(<span class="string">&quot;#login_btn&quot;</span>).<span class="title function_">on</span>(<span class="string">&quot;click&quot;</span>,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    $.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>:<span class="string">&quot;post&quot;</span>,</span><br><span class="line">      <span class="attr">url</span>:<span class="string">&quot;/login&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>:$(<span class="string">&quot;#form&quot;</span>).<span class="title function_">serialize</span>(), <span class="comment">//获取form表单数据</span></span><br><span class="line">      <span class="attr">success</span>:<span class="keyword">function</span> (<span class="params">data</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(data.<span class="property">result</span> == -<span class="number">1</span>)&#123;</span><br><span class="line">          <span class="variable language_">window</span>.<span class="title function_">alert</span>(data.<span class="property">message</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(data.<span class="property">result</span> == <span class="number">0</span>)&#123;</span><br><span class="line">          <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;/&quot;</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="variable language_">window</span>.<span class="title function_">alert</span>(data.<span class="property">message</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//第二种方式,定义函数，触发了html事件后，调用函数发送ajax请求</span></span><br><span class="line"><span class="comment">//html中button添加事件onclick=&quot;login()&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">login</span>(<span class="params"></span>)&#123;</span><br><span class="line">  $.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>:<span class="string">&quot;post&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&quot;/login&quot;</span>,</span><br><span class="line">    <span class="attr">data</span>:$(<span class="string">&quot;#form&quot;</span>).<span class="title function_">serialize</span>(),</span><br><span class="line">    <span class="attr">success</span>:<span class="keyword">function</span> (<span class="params">data</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(data.<span class="property">result</span> == -<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="title function_">alert</span>(data.<span class="property">message</span>)</span><br><span class="line">      &#125;<span class="keyword">else</span> <span class="keyword">if</span>(data.<span class="property">result</span> == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;/&quot;</span></span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="title function_">alert</span>(data.<span class="property">message</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>API</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">end</span>() <span class="comment">//设置http响应代码</span></span><br><span class="line">res.<span class="title function_">json</span>(&#123;<span class="attr">result</span>:<span class="number">0</span>,<span class="attr">message</span>:<span class="string">&quot;ok&quot;</span>&#125;)	<span class="comment">//自动调用JSON.stringify()把参数转为json字符串，响应头的Content-Type设置为application/json</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><h4 id="express框架本身不支持session，需要使用第三方session模块"><a href="#express框架本身不支持session，需要使用第三方session模块" class="headerlink" title="express框架本身不支持session，需要使用第三方session模块"></a>express框架本身不支持session，需要使用第三方session模块</h4><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><ol>
+<li>客户端发送登录请求，用户名密码校验通过后，服务器创建session，并把session存储到内存或者数据库</li>
+<li>服务器自动添加响应头set-cookie&#x3D;sessionID</li>
+<li>客户端收到set-cookie响应，设置cookie</li>
+<li>客户端以后的每次请求都会在请求头中发送cookie</li>
+<li>服务器拿到cookie中的sessionID，到session存储介质中进行检索，如果找到，会把session中存储的数据（一般是用户信息）赋值给 req.session；如果找不到，req.session无值</li>
+<li>服务器通过req.session是否有值来判断用户是否已登录</li>
+</ol>
+<p>session何时清除</p>
+<ol start="3">
+<li>主动调用destroy（）方法清除</li>
+<li>内存中的session，服务器进程终止后清除</li>
+<li>通过session存储介质设置的expires自动清除session</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">npm install express-session</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">&quot;express-session&quot;</span>)</span><br><span class="line"></span><br><span class="line"># session默认存储到内存</span><br><span class="line"># cookie的maxAge同时也影响session的expires</span><br><span class="line"># cookie的maxAge优先于介质中设置的expires，同时都有设置的时候，session的expires取决于maxAge</span><br><span class="line"></span><br><span class="line"><span class="comment">//存储到MongoDB</span></span><br><span class="line">npm install connect-mongo</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">MongoStore</span> = <span class="built_in">require</span> (<span class="string">&quot;connect-mongo&quot;</span>)</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">session</span>(</span><br><span class="line">    &#123;</span><br><span class="line"> 	   <span class="attr">secret</span>: <span class="string">&#x27;keyboard cat&#x27;</span>, <span class="comment">//自定义字符串，hash计算得到T，放在cookie中，防止cookie被篡改</span></span><br><span class="line">       <span class="attr">resave</span>: <span class="literal">false</span>,</span><br><span class="line">       <span class="attr">cookie</span>:&#123;<span class="attr">maxAge</span>:<span class="number">60000</span>&#125;, <span class="comment">//设置cookie有效时间，单位是ms，cookie过期后，后续请求就不携带Cooke了</span></span><br><span class="line">       <span class="attr">saveUninitialized</span>: <span class="literal">false</span>,	 <span class="comment">//只要客户端来请求，就自动生成一个session</span></span><br><span class="line">       <span class="attr">store</span>:<span class="title class_">MongoStore</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">           <span class="attr">mongoUrl</span>: <span class="string">&#x27;mongodb://localhost:27017/eduSystem&#x27;</span></span><br><span class="line">           <span class="attr">ttl</span>:<span class="number">1209600</span>	<span class="comment">//设置session expires</span></span><br><span class="line">       &#125;)  <span class="comment">//session存储到MongoDB</span></span><br><span class="line">   &#125;</span><br><span class="line">))</span><br><span class="line"></span><br><span class="line"><span class="comment">//存储到mysql</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">MysqlStore</span> = <span class="built_in">require</span>(<span class="string">&quot;express-mysql-session&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> options = &#123;</span><br><span class="line">    <span class="attr">host</span>:<span class="string">&quot;192.168.199.100&quot;</span>,</span><br><span class="line">    <span class="attr">port</span>:<span class="number">3306</span>,</span><br><span class="line">    <span class="attr">user</span>:<span class="string">&quot;root&quot;</span>,</span><br><span class="line">    <span class="attr">password</span>:<span class="string">&quot;7758521&quot;</span>,</span><br><span class="line">    <span class="attr">database</span>:<span class="string">&quot;eduSystem&quot;</span>,</span><br><span class="line">    <span class="attr">expiration</span>: <span class="number">86400000</span>,    <span class="comment">//session存储时效，单位ms，session只是过期，不会清除</span></span><br><span class="line">    <span class="attr">clearExpired</span>:<span class="literal">true</span>,		<span class="comment">//是否清除过期session</span></span><br><span class="line">    <span class="attr">checkExpirationInterval</span>:<span class="number">120000</span>	<span class="comment">//每隔多长时间清除一次过期session</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> sessionStore = <span class="keyword">new</span> <span class="title class_">MysqlStore</span>(options)</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">session</span>(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">secret</span>:<span class="string">&quot;osdsjyp012&quot;</span>,</span><br><span class="line">        <span class="attr">resave</span>:<span class="literal">false</span>,</span><br><span class="line">        <span class="attr">saveUninitialized</span>:<span class="literal">false</span>,</span><br><span class="line">        <span class="attr">store</span>:sessionStore</span><br><span class="line">    &#125;</span><br><span class="line">))</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户登录时创建session，会自动在响应头中添加set-cookie = sessionID</span></span><br><span class="line"><span class="comment">//用户登录后，后续向session中添加数据</span></span><br><span class="line">req.<span class="property">session</span>.<span class="property">yourSessionName</span> = yourSessionValue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁服务器session</span></span><br><span class="line">req.<span class="property">session</span>.<span class="title function_">destroy</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//退出登录状态,服务器session还在</span></span><br><span class="line">req.<span class="property">session</span>.<span class="property">yourSessionName</span> = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用第三方模块md5加密</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install md5</span><br><span class="line"><span class="keyword">var</span> md5 = <span class="built_in">require</span>(<span class="string">&quot;md5&quot;</span>)</span><br><span class="line">md5passwod = <span class="title function_">md5</span>(body.<span class="property">password</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>异步请求时，服务器对页面的更改、跳转无效</li>
+</ul>
+<h4 id="Express中间件"><a href="#Express中间件" class="headerlink" title="Express中间件"></a>Express中间件</h4><ol>
+<li><h5 id="中间件是按照代码顺序依次执行的"><a href="#中间件是按照代码顺序依次执行的" class="headerlink" title="中间件是按照代码顺序依次执行的"></a>中间件是按照代码顺序依次执行的</h5></li>
+<li><h5 id="请求经过中间件时，如果中间件中没有调用next-，则请求会停留在这个中间件中；如果有调用next-，则请求会继续去匹配下个中间件，但是它只会去匹配符合规定条件的中间件"><a href="#请求经过中间件时，如果中间件中没有调用next-，则请求会停留在这个中间件中；如果有调用next-，则请求会继续去匹配下个中间件，但是它只会去匹配符合规定条件的中间件" class="headerlink" title="请求经过中间件时，如果中间件中没有调用next()，则请求会停留在这个中间件中；如果有调用next()，则请求会继续去匹配下个中间件，但是它只会去匹配符合规定条件的中间件"></a>请求经过中间件时，如果中间件中没有调用next()，则请求会停留在这个中间件中；如果有调用next()，则请求会继续去匹配下个中间件，但是它只会去匹配符合规定条件的中间件</h5></li>
+<li><h5 id="中间件实际上接受3个参数function（req-res-next），next是个函数"><a href="#中间件实际上接受3个参数function（req-res-next），next是个函数" class="headerlink" title="中间件实际上接受3个参数function（req,res,next），next是个函数"></a>中间件实际上接受3个参数function（req,res,next），next是个函数</h5></li>
+<li><p>应用程序级别中间件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//万能匹配 任何请求都会经过这里</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">	[<span class="title function_">next</span>()]    </span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//只匹配以/xxx开头的去请求</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/xxx&quot;</span>,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>路由级别中间件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//严格匹配，规定了请求方法和请求路径。只有符合的请求才会经过这里</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;url&quot;</span>,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;url&quot;</span>,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br><span class="line">app.<span class="title function_">put</span>(...)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>错误处理中间件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//必须接受4个参数</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">err,req,res,next</span>)&#123;</span><br><span class="line">     res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(err)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;url&quot;</span>,<span class="keyword">function</span> (<span class="params">req,res,next</span>)&#123;</span><br><span class="line">  	...</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line">   		<span class="keyword">return</span> <span class="title function_">next</span>(err)  </span><br><span class="line">	&#125;  </span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内置中间件</p>
+<p>express.static</p>
+</li>
+<li><p>第三方中间件</p>
+<p>body-parser</p>
+<p>session</p>
+</li>
+</ol>
+<ul>
+<li>express自定义处理404</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//必须放在挂载路由后面，原因是中间件的执行顺序</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span> (<span class="params">req,res</span>)&#123;         </span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">send</span>(<span class="string">&quot;404页面找不到&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p> res.header(“Access-Control-Allow-Origin”, “*”)&#x2F;&#x2F;允许跨域请求</p>
+<h4 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h4><ul>
+<li>浏览器请求页面或者需要页面跳转的时候，请求的是前端服务器，前端服务器再去请求后台服务器接口，拿到返回的数据，然后渲染页面</li>
+<li>浏览器发起ajax请求的时候，如果不需要页面跳转，可以直接请求后台服务器，拿到返回的数据，在ajax里对本页面进行渲染</li>
+</ul>
+<p>&#x2F;&#x2F;设置跨域访问  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">all</span>(<span class="string">&#x27;*&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;  </span><br><span class="line"></span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;*&quot;</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;X-Requested-With&quot;);  </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//res.header(&quot;Access-Control-Allow-Methods&quot;,&quot;PUT,POST,GET,DELETE,OPTIONS&quot;);  </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// res.header(&quot;X-Powered-By&quot;,&#x27; 3.2.1&#x27;)  </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//res.header(&quot;Content-Type&quot;, &quot;application/json;charset=utf-8&quot;);  </span></span><br><span class="line">    </span><br><span class="line">    res.<span class="title function_">header</span>(<span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span>, <span class="string">&quot;true&quot;</span>);<span class="comment">//允许跨域设置cookie</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">next</span>();  </span><br><span class="line"></span><br><span class="line">&#125;); </span><br><span class="line"><span class="comment">//ajax中设置跨域访问cookie</span></span><br><span class="line"><span class="attr">xhrFields</span>:&#123;</span><br><span class="line">            <span class="attr">withCredentials</span>:<span class="literal">true</span></span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>使用https协议</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用openssl生成私钥、证书签名、证书</span></span><br><span class="line"># openssl genrsa <span class="number">1024</span> &gt;./private.<span class="property">pem</span></span><br><span class="line"># openssl req -<span class="keyword">new</span> -key ./private.<span class="property">pem</span> -out csr.<span class="property">pem</span></span><br><span class="line"># openssl x509 -req -days <span class="number">365</span> -<span class="keyword">in</span> csr.<span class="property">pem</span> -signkey ./private.<span class="property">pem</span> -out ./file.<span class="property">crt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器中使用https</span></span><br><span class="line"><span class="keyword">var</span> https = <span class="built_in">require</span>(<span class="string">&quot;https&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> privateKey = fs.<span class="title function_">readFileSync</span>(path.<span class="title function_">join</span>(__dirname,<span class="string">&quot;https/private.pem&quot;</span>),<span class="string">&quot;utf8&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> certificate = fs.<span class="title function_">readFileSync</span>(path.<span class="title function_">join</span>(__dirname,<span class="string">&quot;https/file.crt&quot;</span>),<span class="string">&quot;utf8&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> credentials = &#123;<span class="attr">key</span>:privateKey,<span class="attr">cert</span>:certificate&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> httpsServer = https.<span class="title function_">createServer</span>(credentials,app)</span><br><span class="line">httpsServer.<span class="title function_">listen</span>(<span class="number">3000</span>,<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;server started at https://127.0.0.1:3000&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>sql注入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只有使用字符串拼接才会出现sql注入漏洞</span></span><br><span class="line">connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers where email=&#x27;&quot;</span> + body.<span class="property">email</span> + <span class="string">&quot;&#x27;&quot;</span>,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//防止sql注入</span></span><br><span class="line">#使用占位符</span><br><span class="line">connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers where email=?&quot;</span>,body.<span class="property">email</span>,<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;&#125;)</span><br><span class="line">connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers where email=? and password=?&quot;</span>,[body.<span class="property">email</span>,body.<span class="property">password</span>],<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;&#125;)</span><br><span class="line">#使用<span class="built_in">escape</span>方法对参数编码，变量两边没有引号</span><br><span class="line">connection.<span class="title function_">query</span>(<span class="string">&quot;select * from teachers where email=&quot;</span> + connection.<span class="built_in">escape</span>(body.<span class="property">email</span>),<span class="keyword">function</span> (<span class="params">err,result</span>)&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>安装xmysql，支持postman使用api操作数据库</p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/xmysql">https://www.npmjs.com/package/xmysql</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install xmysql</span><br><span class="line"><span class="comment">//开启xmysql服务</span></span><br><span class="line">xmysql -h <span class="number">192.168</span><span class="number">.199</span><span class="number">.100</span> -u root -p <span class="number">7758521</span> -d eduSystem</span><br><span class="line"><span class="comment">//访问地址</span></span><br><span class="line"><span class="attr">localhost</span>:<span class="number">3000</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/08/%E4%BD%BF%E7%94%A8hexo%E6%A1%86%E6%9E%B6%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="prev" title="使用hexo框架创建个人博客">
+                  <i class="fa fa-angle-left"></i> 使用hexo框架创建个人博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Timis Li</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
